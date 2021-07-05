@@ -1,5 +1,6 @@
 import React from 'react';
 import ContactInfo from './ContactInfo';
+import ContactDetail from './ContactDetail';
 
 export default class Contact extends React.Component {
     constructor(props) {
@@ -7,7 +8,7 @@ export default class Contact extends React.Component {
         this.state = {
             selectedKey: -1,
             keyword: '',
-            contatctData: [
+            contactData: [
                 { number: '010-0000-0000', name: 'Albert' },
                 { number: '010-0000-0001', name: 'Betty' },
                 { number: '010-0000-0002', name: 'Charlie' },
@@ -27,7 +28,7 @@ export default class Contact extends React.Component {
         this.setState({
             selectedKey: key
         });
-        console.log('A');
+        console.log(`'${key}' is selected!`);
     }
 
     render() {
@@ -49,7 +50,11 @@ export default class Contact extends React.Component {
                     value={this.state.keyword}
                     onChange={this.handleChange}
                 />
-                {convertComponentToMap(this.state.contatctData)}
+                {convertComponentToMap(this.state.contactData)}
+                <ContactDetail 
+                    isSelected={this.state.selectedKey != -1 ? true : false}
+                    contactData={this.state.contactData[this.state.selectedKey]}
+                />
             </div>
         );
     }
