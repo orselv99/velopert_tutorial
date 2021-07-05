@@ -105,12 +105,14 @@ export default class Contact extends React.Component {
     }
     handleEdit(name, number) {
         this.setState({
-            contactData: update({
-                [this.state.selectedKey]: {
-                    name: { $set: name },
-                    number: { $set: number },
-                },
-            }),
+            contactData: update(
+                this.state.contactData,
+                {
+                    [this.state.selectedKey]: {
+                        name: { $set: name },
+                        number: { $set: number },
+                    },
+                }),
         });
     }
 
@@ -137,6 +139,7 @@ export default class Contact extends React.Component {
                 <ContactDetail 
                     isSelected={this.state.selectedKey != -1 ? true : false}
                     contactData={this.state.contactData[this.state.selectedKey]}
+                    onEdit={this.handleEdit}
                 />
                 <ContactCreate 
                     onClick={this.handleCreate}
