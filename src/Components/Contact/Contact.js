@@ -92,18 +92,9 @@ export default class Contact extends React.Component {
             ),
         });
     }
-    handleRemove() {
-        this.setState({
-            contactData: update(
-                this.state.contactData,
-                {
-                    // '현재 선택된 키' 부터 하나의 원소제거
-                    $splice: [[this.state.selectedKey, 1]],
-                }
-            ),
-        });
-    }
     handleEdit(name, number) {
+        // if ((name.length > 0) && (number.length > 0)) {
+        // }
         this.setState({
             contactData: update(
                 this.state.contactData,
@@ -113,6 +104,22 @@ export default class Contact extends React.Component {
                         number: { $set: number },
                     },
                 }),
+        });
+    }
+    handleRemove() {
+        if (this.state.selectedKey < 0) {
+            // 선택한 경우에만 삭제
+            return;
+        }
+
+        this.setState({
+            contactData: update(
+                this.state.contactData,
+                {
+                    // '현재 선택된 키' 부터 하나의 원소제거
+                    $splice: [[this.state.selectedKey, 1]],
+                }
+            ),
         });
     }
 
@@ -136,12 +143,13 @@ export default class Contact extends React.Component {
                     onChange={this.handleChange}
                 />
                 {convertComponentToMap(this.state.contactData)}
-                <ContactDetail 
+                <ContactDetail
                     isSelected={this.state.selectedKey != -1 ? true : false}
                     contactData={this.state.contactData[this.state.selectedKey]}
                     onEdit={this.handleEdit}
+                    onRemove={this.handleRemove}
                 />
-                <ContactCreate 
+                <ContactCreate
                     onClick={this.handleCreate}
                 />
             </div>
