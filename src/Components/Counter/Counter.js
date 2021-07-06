@@ -1,9 +1,9 @@
 import React from 'react';
 
 var numbers = [1, 2, 3, 4, 5];
-var processed = numbers.map(number => {
-    return number * number;
-});
+// var processed = numbers.map(number => {
+//     return number * number;
+// });
 
 // Counter
 export default class Counter extends React.Component {

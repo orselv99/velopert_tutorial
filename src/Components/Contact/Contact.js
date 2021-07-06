@@ -144,7 +144,7 @@ export default class Contact extends React.Component {
                 />
                 {convertComponentToMap(this.state.contactData)}
                 <ContactDetail
-                    isSelected={this.state.selectedKey != -1 ? true : false}
+                    isSelected={this.state.selectedKey !== -1 ? true : false}
                     contactData={this.state.contactData[this.state.selectedKey]}
                     onEdit={this.handleEdit}
                     onRemove={this.handleRemove}
