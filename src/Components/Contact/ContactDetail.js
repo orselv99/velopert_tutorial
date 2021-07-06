@@ -5,6 +5,7 @@ export default class ContactDetail extends React.Component {
         super(props);
         this.state = {
             isEdit: false,
+            // isSelected: false,
             name: '',
             number: '',
         };
@@ -12,11 +13,12 @@ export default class ContactDetail extends React.Component {
         this.handleToggle = this.handleToggle.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleEdit = this.handleEdit.bind(this);
+        this.handleKeyPress = this.handleKeyPress.bind(this);
     }
 
-    handleToggle(isSelected) {
+    handleToggle() {
         // 아이템 선택된 경우에만 계속 처리
-        if (isSelected === false) {
+        if (this.props.isSelected === false) {
             console.log(`selected nothing.`);
             return;
         }
@@ -50,6 +52,13 @@ export default class ContactDetail extends React.Component {
     handleEdit() {
         this.props.onEdit(this.state.name, this.state.number);
     }
+    handleKeyPress(e) {
+        if (e.charCode === 13) {
+            // enter 이벤트 추가
+            this.handleToggle();
+            // this.handleToggle(this.state.isSelected);
+        }
+    }
 
     render() {
         const details = (
@@ -77,6 +86,7 @@ export default class ContactDetail extends React.Component {
                         value={this.state.number}
                         placeholder='number'
                         onChange={this.handleChange}
+                        onKeyPress={this.handleKeyPress}
                     />
                 </p>
             </div>
@@ -89,7 +99,7 @@ export default class ContactDetail extends React.Component {
                 <h2>Details</h2>
                 {this.props.isSelected ? view : blank}
                 <p>
-                    <button onClick={() => this.handleToggle(this.props.isSelected)}>
+                    <button onClick={this.handleToggle}>
                         {this.state.isEdit ? 'OK' : 'Edit'}
                     </button>
                     <button onClick={this.props.onRemove}>Remove</button>
